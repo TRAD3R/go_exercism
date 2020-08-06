@@ -4,14 +4,14 @@ import "unicode"
 
 // IsIsogram - determines if a word or phrase is an isogram
 func IsIsogram(str string) bool {
-	uniqueChars := map[rune]rune{}
-	for _, char := range []rune(str) {
+	uniqueChars := map[rune]bool{}
+	for _, char := range str {
 		if unicode.IsLetter(char) {
 			lowerChar := unicode.ToLower(char)
-			if _, ok := uniqueChars[lowerChar]; ok {
+			if uniqueChars[lowerChar] {
 				return false
 			}
-			uniqueChars[lowerChar] = char
+			uniqueChars[lowerChar] = true
 		}
 	}
 
