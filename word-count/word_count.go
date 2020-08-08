@@ -1,8 +1,8 @@
 package wordcount
 
 import (
-	"regexp"
 	"strings"
+	"unicode"
 )
 
 // Frequency - resulting map
@@ -12,15 +12,15 @@ type Frequency map[string]int
 func WordCount(str string) Frequency {
 	str = strings.ToLower(str)
 	res := Frequency{}
-	str = replaceWrongChars(str, "[^a-z0-9']", " ")
 
-	subs := strings.Split(str, " ")
+	subs := strings.FieldsFunc(str, func(r rune) bool {
+		return !(unicode.IsLetter(r) || unicode.IsDigit(r) || r == '\'')
+	})
 	for _, key := range subs {
 		if len(key) == 0 {
 			continue
 		}
-		key = replaceWrongChars(key, "^'", "")
-		key = replaceWrongChars(key, "'$", "")
+		key = strings.Trim(key, "'")
 		if v, ok := res[key]; ok {
 			res[key] = v + 1
 		} else {
@@ -29,10 +29,4 @@ func WordCount(str string) Frequency {
 	}
 
 	return res
-}
-
-// replaceWrongChars - regexp replacer
-func replaceWrongChars(source, expr, repl string) string {
-	reg := regexp.MustCompile(expr)
-	return reg.ReplaceAllString(source, repl)
 }
