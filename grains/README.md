@@ -5,7 +5,7 @@ If you need help running the tests or submitting your code, check out `HELP.md`.
 
 ## Instructions
 
-Calculate the number of grains of wheat on a chessboard given that the number
+**Calculate the number of grains of wheat on a chessboard given that the number
 on each square doubles.
 
 There once was a wise servant who saved the life of a prince. The king
@@ -19,7 +19,7 @@ There are 64 squares on a chessboard (where square 1 has one grain, square 2 has
 Write code that shows:
 
 - how many grains were on a given square, and
-- the total number of grains on the chessboard
+- the total number of grains on the chessboard**
 
 ## For bonus points
 
