@@ -1,7 +1,7 @@
 package tree
 
 import (
-	"errors"
+	"fmt"
 	"sort"
 )
 
@@ -25,7 +25,7 @@ func Build(records []Record) (*Node, error) {
 	nodes := map[int]*Node{}
 	for i, r := range records {
 		if i != r.ID || r.ID < r.Parent || (r.ID > 0 && r.ID == r.Parent) {
-			return nil, errors.New("Invalid records structure")
+			return nil, fmt.Errorf("bad record %#v", r)
 		}
 
 		nodes[r.ID] = &Node{ID: r.ID}
