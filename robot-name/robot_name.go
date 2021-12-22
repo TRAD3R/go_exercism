@@ -23,15 +23,20 @@ type Robot struct {
 }
 
 func (r *Robot) Name() (string, error) {
-	if len(r.name) == 0 {
-
-		if len(existedNames) == maxRandNames {
-			return "", fmt.Errorf("Out of names")
-		}
-
-		r.name = generateName()
-		existedNames[r.name] = true
+	if r.name != "" {
+		return r.name, nil
 	}
+
+	if len(existedNames) == maxRandNames {
+		return "", fmt.Errorf("Out of names")
+	}
+
+	r.name = newName()
+	for existedNames[r.name] {
+		r.name = newName()
+	}
+
+	existedNames[r.name] = true
 
 	return r.name, nil
 }
@@ -40,23 +45,15 @@ func (r *Robot) Reset() {
 	r.name = ""
 }
 
-func generateName() string {
-	for {
-		newName := fmt.Sprintf(
-			"%s%s%d%d%d",
-			randomLetter(),
-			randomLetter(),
-			randomInt(),
-			randomInt(),
-			randomInt(),
-		)
-
-		if _, ok := existedNames[newName]; ok {
-			continue
-		}
-
-		return newName
-	}
+func newName() string {
+	return fmt.Sprintf(
+		"%s%s%d%d%d",
+		randomLetter(),
+		randomLetter(),
+		randomInt(),
+		randomInt(),
+		randomInt(),
+	)
 }
 
 func randomLetter() string {
